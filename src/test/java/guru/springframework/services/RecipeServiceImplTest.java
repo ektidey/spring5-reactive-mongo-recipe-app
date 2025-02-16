@@ -7,8 +7,8 @@ import guru.springframework.converters.RecipeToRecipeCommand;
 import guru.springframework.domain.Recipe;
 import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.repositories.RecipeRepository;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -16,8 +16,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -36,7 +35,7 @@ public class RecipeServiceImplTest {
     @Mock
     RecipeCommandToRecipe recipeCommandToRecipe;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
@@ -53,19 +52,21 @@ public class RecipeServiceImplTest {
 
         Recipe recipeReturned = recipeService.findById("1");
 
-        assertNotNull("Null recipe returned", recipeReturned);
+        assertNotNull(recipeReturned, "Null recipe returned");
         verify(recipeRepository, times(1)).findById(anyString());
         verify(recipeRepository, never()).findAll();
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void getRecipeByIdTestNotFound() throws Exception {
 
         Optional<Recipe> recipeOptional = Optional.empty();
 
         when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
 
-        Recipe recipeReturned = recipeService.findById("1");
+        assertThrows(NotFoundException.class, () -> {
+            Recipe recipeReturned = recipeService.findById("1");
+        });
 
         //should go boom
     }
@@ -85,7 +86,7 @@ public class RecipeServiceImplTest {
 
         RecipeCommand commandById = recipeService.findCommandById("1");
 
-        assertNotNull("Null recipe returned", commandById);
+        assertNotNull(commandById, "Null recipe returned");
         verify(recipeRepository, times(1)).findById(anyString());
         verify(recipeRepository, never()).findAll();
     }
