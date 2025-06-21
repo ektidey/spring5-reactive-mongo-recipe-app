@@ -5,6 +5,7 @@ import guru.springframework.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import guru.springframework.domain.UnitOfMeasure;
 import guru.springframework.repositories.UnitOfMeasureRepository;
 import guru.springframework.repositories.reactive.UnitOfMeasureReactiveRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -26,11 +27,18 @@ public class UnitOfMeasureServiceImplTest {
     @Mock
     UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository;
 
+    AutoCloseable autoCloseable;
+
     @BeforeEach
     public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
+        autoCloseable = MockitoAnnotations.openMocks(this);
 
         service = new UnitOfMeasureServiceImpl(unitOfMeasureReactiveRepository, unitOfMeasureToUnitOfMeasureCommand);
+    }
+
+    @AfterEach
+    public void tearDown() throws Exception {
+        autoCloseable.close();
     }
 
     @Test

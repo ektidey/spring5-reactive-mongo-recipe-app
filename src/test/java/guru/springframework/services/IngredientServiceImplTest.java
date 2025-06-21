@@ -9,6 +9,7 @@ import guru.springframework.domain.Ingredient;
 import guru.springframework.domain.Recipe;
 import guru.springframework.repositories.reactive.RecipeReactiveRepository;
 import guru.springframework.repositories.reactive.UnitOfMeasureReactiveRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -50,6 +51,7 @@ public class IngredientServiceImplTest {
                 recipeReactiveRepository, unitOfMeasureReactiveRepository);
     }
 
+    @AfterEach
     public void tearDown() throws Exception {
         autoCloseable.close();
     }
