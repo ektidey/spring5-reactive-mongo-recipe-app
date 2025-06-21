@@ -43,6 +43,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('io.projectreactor:reactor-test')
+	testImplementation('org.objenesis:objenesis:2.3')
 	testCompileOnly 'org.projectlombok:lombok:1.18.22'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
 }
